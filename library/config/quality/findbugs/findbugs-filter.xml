@@ -1,0 +1,21 @@
+<FindBugsFilter>
+    <Match>
+        <Or>
+            <Class name="~.*\.R\$.*" />
+            <Class name="~.*\.Manifest\$.*" />
+        </Or>
+        <Bug
+            category="PERFORMANCE,MALICIOUS_CODE,STYLE,SECURITY,CORRECTNESS,MT_CORRECTNESS,BAD_PRACTICE,I18N" />
+    </Match>
+
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2,ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
+    </Match>
+
+    <!--TODO: remove once the implementation is finished-->
+    <Match>
+        <Bug
+            pattern="URF_UNREAD_FIELD,UUF_UNUSED_FIELD,DLS_DEAD_LOCAL_STORE,URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD,DLS_DEAD_LOCAL_STORE,MS_PKGPROTECT,UG_SYNC_SET_UNSYNC_GET" />
+    </Match>
+
+</FindBugsFilter>

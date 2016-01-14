@@ -1,0 +1,87 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "20.0.0"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        lintConfig file("config/quality/lint/lint.xml")
+    }
+
+    packagingOptions {
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+
+}
+
+dependencies {
+    compile 'org.altbeacon:android-beacon-library:2+'
+
+    compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
+
+    compile "com.android.support:support-v4:23.1.0"
+
+    compile 'com.squareup.okhttp:okhttp:2.1.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
+    compile 'com.squareup.retrofit:converter-jackson:1.7.1'
+}
+
+//static code analysis
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
+
+task pathingJar(type: Jar) {
+    appendix = "pathing"
+    doFirst {
+        manifest {
+            attributes "Class-Path": project.configurations.compile.files.join(" ")
+        }
+    }
+}
+
+task pmd(type: Pmd) {
+    ignoreFailures = true
+    ruleSetFiles = files('config/quality/pmd/pmd-rules.xml')
+    source = fileTree('src/main/java/')
+}
+
+
+task findbugs(type: FindBugs, dependsOn: ['pathingJar', 'assembleDebug']) {
+    excludeFilter file('config/quality/findbugs/findbugs-filter.xml')
+    classes = fileTree('build/intermediates/classes/_fix_this_path_/debug/')
+    source = fileTree('src/main/java/')
+    classpath = files(pathingJar.archivePath)
+    effort = 'max'
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
+
+task quickCheck() {
+    group = 'verification'
+}
+
+//todo - fix task name
+quickCheck.dependsOn 'lintDevLogcatlogsDebug', 'pmd', 'findbugs'

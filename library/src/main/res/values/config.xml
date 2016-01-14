@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2016, Upnext Technologies Sp. z o.o.
+  ~ All rights reserved.
+  ~
+  ~ This source code is licensed under the BSD 3-Clause License found in the
+  ~ LICENSE.txt file in the root directory of this source tree.
+  -->
+
+<resources>
+
+    <integer name="sdk_config__connect_timeout_seconds">15</integer>
+    <integer name="sdk_config__read_timeout_seconds">20</integer>
+    <integer name="sdk_config__write_timeout_seconds">20</integer>
+
+    <string name="sdk_config__service_base_url">https://www.admin.beaconctrl.com/api/v1/</string>
+
+    <integer name="sdk_config__max_running_services">1000</integer>
+
+    <string name="sdk_config__iBeacon_parser_layout">m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25</string>
+    <integer name="sdk_config__foreground_scan_duration_millis">2000</integer>
+    <integer name="sdk_config__foreground_pause_duration_millis">5000</integer>
+    <integer name="sdk_config__background_scan_duration_millis">2000</integer>
+    <integer name="sdk_config__background_pause_duration_millis">20000</integer>
+    <integer name="sdk_config__leave_msg_delay_millis">15000</integer>
+
+    <integer name="sdk_config__events_sendout_timeout_seconds">180</integer>
+
+</resources>
