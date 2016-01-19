@@ -8,7 +8,7 @@ BeaconControl Android SDK is an Android library providing APIs to manage beacon 
 
 ## What does this library do?
 
-The library allows the application to start and stop beacon detection. If beacon monitoring is enabled, the application may receive callback about starting and ending of actions. Actions have to be defined earlier by the user. There are three types of actions: url, coupon and custom. Url and coupon actions are handled automatically by the library, however custom actions may be performed manually by the user.
+The library allows the application to start and stop beacon detection. If beacon monitoring is enabled, the application may receive callback about starting and ending of actions. Actions have to be defined earlier by the user. There are three types of actions: url, coupon and custom. Url and coupon actions may be handled automatically by the library, however custom actions must be performed manually by the user.
 
 ## Documentation
 
@@ -92,7 +92,7 @@ You may enable logging.
 beaconSDK.enableLogging(true);
 ```
 
-The next step is defining and setting the BeaconDelegate object.
+The next step is defining and setting the BeaconDelegate object. If you decide to perform an action automatically, there will be a WebView activity shown for url and coupon actions.
 
 ```java
 beaconSDK.setBeaconDelegate(new BeaconDelegate() {
@@ -111,6 +111,49 @@ beaconSDK.setBeaconDelegate(new BeaconDelegate() {
   		// you may do something when action ends
   	}
 });
+```
+
+However, you should handle custom action by your own. Here is an example:
+
+```java
+@Override
+public void onActionStart(Action action) {
+    long actionId = action.id;
+    String actionName = action.name;
+
+    switch (action.type) {
+        case url:
+            onUrlActionStart(actionId, actionName, action.payload);
+            break;
+        case coupon:
+            // do something for coupon action
+            break;
+        case custom:
+            onCustomActionStart(actionId, actionName, action.customAttributes);
+            break;
+        default:
+      		throw new IllegalStateException("Unknown action type.");
+ 	}
+}
+
+    private void onUrlActionStart(long actionId, String actionName, Action.Payload payload) {
+    	if (payload != null) {
+            String url = payload.url;
+            // you may do something for url action
+   		}
+    	...
+    }
+
+    private void onCustomActionStart(long actionId, String actionName, List<Action.CustomAttribute> customAttributes) {
+        for (Action.CustomAttribute customAttribute : customAttributes) {
+        	long attributeId = customAttribute.id;
+        	String attributeName = customAttribute.name;
+        	String attributeValue = customAttribute.value;
+
+        	// you may do something for custom attribute
+        }
+    	...
+	}
 ```
 
 If you want, you may set callback for errors. Then every time an error occurs, you will be notified.
