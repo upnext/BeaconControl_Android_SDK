@@ -136,24 +136,24 @@ public void onActionStart(Action action) {
  	}
 }
 
-    private void onUrlActionStart(long actionId, String actionName, Action.Payload payload) {
-    	if (payload != null) {
-            String url = payload.url;
-            // you may do something for url action
-   		}
-    	...
-    }
-
-    private void onCustomActionStart(long actionId, String actionName, List<Action.CustomAttribute> customAttributes) {
-        for (Action.CustomAttribute customAttribute : customAttributes) {
-        	long attributeId = customAttribute.id;
-        	String attributeName = customAttribute.name;
-        	String attributeValue = customAttribute.value;
-
-        	// you may do something for custom attribute
-        }
-    	...
+private void onUrlActionStart(long actionId, String actionName, Action.Payload payload) {
+	if (payload != null) {
+		String url = payload.url;
+		// you may do something for url action
 	}
+	...
+}
+
+private void onCustomActionStart(long actionId, String actionName, List<Action.CustomAttribute> customAttributes) {
+	for (Action.CustomAttribute customAttribute : customAttributes) {
+		long attributeId = customAttribute.id;
+		String attributeName = customAttribute.name;
+		String attributeValue = customAttribute.value;
+
+		// you may do something for custom attribute
+	}
+	...
+}
 ```
 
 If you want, you may set callback for errors. Then every time an error occurs, you will be notified.
