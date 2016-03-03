@@ -14,7 +14,7 @@
     <integer name="sdk_config__read_timeout_seconds">20</integer>
     <integer name="sdk_config__write_timeout_seconds">20</integer>
 
-    <string name="sdk_config__service_base_url">https://www.admin.beaconctrl.com/api/v1/</string>
+    <string name="sdk_config__service_base_url">https://admin.beaconcontrol.io/api/v1/</string>
 
     <integer name="sdk_config__max_running_services">1000</integer>
 

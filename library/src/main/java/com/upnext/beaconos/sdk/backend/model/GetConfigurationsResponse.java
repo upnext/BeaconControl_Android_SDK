@@ -11,7 +11,6 @@ package com.upnext.beaconos.sdk.backend.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.upnext.beaconos.sdk.Action;
 import com.upnext.beaconos.sdk.backend.Validable;
-import com.upnext.beaconos.sdk.util.BeaconLocationUtils;
 import com.upnext.beaconos.sdk.util.StringUtils;
 import com.upnext.beaconos.sdk.util.ULog;
 
@@ -108,7 +107,7 @@ public class GetConfigurationsResponse implements Serializable, Validable {
         @JsonProperty("location")
         public Location location;
 
-        public static class Location implements Serializable, Validable {
+        public static class Location implements Serializable {
 
             @JsonProperty("lat")
             public void setLat(final String latStr) {
@@ -126,18 +125,12 @@ public class GetConfigurationsResponse implements Serializable, Validable {
 
             @JsonProperty("floor")
             public int floor;
-
-            @Override
-            public boolean isValid() {
-                return lat != -1 && BeaconLocationUtils.isLatValid(lat) && lng != -1 && BeaconLocationUtils.isLngValid(lng) && BeaconLocationUtils.isFloorValid(floor);
-            }
         }
 
         @Override
         public boolean isValid() {
             return  name != null && !name.isEmpty() &&
-                    proximityId != null && proximityId.isValid() &&
-                    location != null && location.isValid();
+                    proximityId != null && proximityId.isValid();
         }
     }
 
