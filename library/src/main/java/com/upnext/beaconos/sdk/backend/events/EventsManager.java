@@ -10,6 +10,7 @@ package com.upnext.beaconos.sdk.backend.events;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.DateUtils;
 
 import com.upnext.beaconos.sdk.Action;
 import com.upnext.beaconos.sdk.BeaconSDK;
@@ -122,7 +123,7 @@ public class EventsManager {
 
         event.setActionId(trigger.action.id);
 
-        event.setTimestamp(eventInfo.getTimestamp());
+        event.setTimestamp(eventInfo.getTimestamp() / DateUtils.SECOND_IN_MILLIS); // timestamp in seconds is sent
 
         return event;
     }

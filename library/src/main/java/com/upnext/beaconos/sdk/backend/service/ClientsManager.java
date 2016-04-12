@@ -89,8 +89,10 @@ public class ClientsManager {
         EventInfo eventInfo = new EventInfo(beaconEvent, eventTimestamp, EventSource.BEACON);
         notifyClientsAboutEvent(bm, bm.getBeaconTriggersForEvent(beaconEvent), eventInfo);
 
-        eventInfo = new EventInfo(beaconEvent, eventTimestamp, EventSource.ZONE);
-        notifyClientsAboutEvent(bm, bm.getZoneTriggersForEvent(beaconEvent), eventInfo);
+        if (bm.getZone() != null) {
+            eventInfo = new EventInfo(beaconEvent, eventTimestamp, EventSource.ZONE);
+            notifyClientsAboutEvent(bm, bm.getZoneTriggersForEvent(beaconEvent), eventInfo);
+        }
     }
 
     protected BeaconEvent getBeaconEventFromDistance(double distance) {
