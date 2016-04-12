@@ -28,7 +28,7 @@ public class CreateEventsRequest {
         public String proximityId;
 
         @JsonProperty("zone_id")
-        public long zoneId;
+        public Long zoneId;
 
         @JsonProperty("action_id")
         public long actionId;
@@ -54,7 +54,7 @@ public class CreateEventsRequest {
             return this;
         }
 
-        public Event setZoneId(long zoneId) {
+        public Event setZoneId(Long zoneId) {
             this.zoneId = zoneId;
             return this;
         }
