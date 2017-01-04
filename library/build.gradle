@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "20.0.0"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         minSdkVersion 18
-        targetSdkVersion 21
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
     }
@@ -35,15 +35,15 @@ android {
 }
 
 dependencies {
-    compile 'org.altbeacon:android-beacon-library:2+'
+    compile 'org.altbeacon:android-beacon-library:2.9.2'
 
-    compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
+    compile "com.android.support:support-v4:25.0.1"
 
-    compile "com.android.support:support-v4:23.1.0"
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-jackson:2.1.0'
 
-    compile 'com.squareup.okhttp:okhttp:2.1.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
-    compile 'com.squareup.retrofit:converter-jackson:1.7.1'
+    compile 'com.squareup.okhttp3:okhttp:3.5.0'
+    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.5.0'
 }
 
 //static code analysis
@@ -85,3 +85,5 @@ task quickCheck() {
 
 //todo - fix task name
 quickCheck.dependsOn 'lintDevLogcatlogsDebug', 'pmd', 'findbugs'
+
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
