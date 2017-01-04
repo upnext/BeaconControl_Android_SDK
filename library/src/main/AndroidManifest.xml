@@ -1,12 +1,14 @@
 <manifest
-    package="com.upnext.beaconos.sdk"
+    package="io.upnext.beaconcontrol.sdk"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name">
 
@@ -14,15 +16,23 @@
             android:name=".backend.service.BeaconService"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.upnext.beaconos.sdk.BeaconService.ACTION"/>
+                <action android:name="io.upnext.beaconcontrol.sdk.BeaconService.ACTION" />
             </intent-filter>
         </service>
 
         <service
-            android:name=".backend.service.BeaconEventProcessor"
+            android:name=".backend.service.BeaconActionProcessor"
             android:exported="true" />
 
-        <activity android:name=".backend.events.WebViewActivity"/>
+        <service
+            android:name=".backend.service.BeaconConfigurationChangeProcessor"
+            android:exported="true" />
+
+        <service
+            android:name=".backend.service.BeaconProximityChangeProcessor"
+            android:exported="true" />
+
+        <activity android:name=".backend.events.WebViewActivity" />
 
     </application>
 

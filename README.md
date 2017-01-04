@@ -1,7 +1,7 @@
 BeaconControl Android SDK
 =======================
 
-#### Integration Guide ver. 1.0
+#### Integration Guide
 
 BeaconControl Android SDK is an Android library providing APIs to manage beacon detection and react to beacon monitoring and ranging actions.
 
@@ -12,48 +12,16 @@ The library allows the application to start and stop beacon detection. If beacon
 
 ## Documentation
 
-On the [project website](https://www.beaconctrl.com/dev/android-sdk-docs/) you will find JavaDoc [documentation](https://www.beaconctrl.com/dev/android-sdk-docs/references).
+On the [project website](https://www.beaconctrl.com/dev/androidsdk-docs/) you will find JavaDoc [documentation](https://www.beaconctrl.com/dev/androidsdk-docs/references).
 
-## Download
-
-To use BeaconControl Android SDK, firstly download the BeaconsControlSDK-1.0.aar file, which you can find in the out/ directory of this repository. Then, put this file into the libs/ subdirectory of the module in which you want to use BeaconControl Android SDK.
+## Adding library dependency
 
 If you are using Gradle, include in your dependencies:
 
 ```groovy
 dependencies {
 	...
-    compile(name: 'BeaconsControlSDK-1.0', ext: 'aar')
-    ...
-}
-```
-
-You also need to add dependencies that are used by BeaconControlSDK.
-
-```groovy
-dependencies {
-	...
-    compile 'org.altbeacon:android-beacon-library:2.7'
-
-    compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
-
-    compile "com.android.support:support-v4:23.1.1"
-
-    compile 'com.squareup.okhttp:okhttp:2.1.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
-    compile 'com.squareup.retrofit:converter-jackson:1.7.1'
-    ...
-}
-```
-
-Please make sure that your libs/ subdirectory is in the repositories list.
-
-```groovy
-repositories {
-	...
-    flatDir {
-        dirs 'libs'
-    }
+    compile 'io.upnext.beaconcontrol:beaconcontrol:1.0.0'
     ...
 }
 ```
@@ -80,36 +48,46 @@ android {
 
 ## Quick Start
 
-At the beginning you have to get the BeaconSDK class instance to interact with Beacon SDK.
+At the beginning you have to get the BeaconControl class instance to interact with BeaconControl SDK.
 
 ```java
-BeaconSDK beaconSDK = BeaconSDK.getInstance(context, clientId, clientSecret, userId);
+BeaconControl beaconControl = BeaconControl.getInstance(context, clientId, clientSecret, userId);
 ```
 
 You may enable logging.
 
 ```java
-beaconSDK.enableLogging(true);
+beaconControl.enableLogging(true);
 ```
 
 The next step is defining and setting the BeaconDelegate object. If you decide to perform an action automatically, there will be a WebView activity shown for url and coupon actions.
 
 ```java
-beaconSDK.setBeaconDelegate(new BeaconDelegate() {
-  	@Override
+beaconControl.setBeaconDelegate(new BeaconDelegate() {
+    @Override
     public boolean shouldPerformActionAutomatically() {
-    	return true;
+        return true;
     }
 
-  	@Override
-  	public void onActionStart(Action action) {
-  		// you may do something when action starts
- 	}
+    @Override
+    public void onActionStart(Action action) {
+        // you may do something when action starts
+    }
 
-  	@Override
-  	public void onActionEnd(Action action) {
-  		// you may do something when action ends
-  	}
+    @Override
+    public void onActionEnd(Action action) {
+        // you may do something when action ends
+    }
+
+    @Override
+    public void onBeaconsConfigurationLoaded(List<Beacon> list) {
+        // you can save the beacons from the configuration for future use
+    }
+
+    @Override
+    public void onBeaconProximityChanged(Beacon beacon) {
+        // you may do something when beacon proximity changes
+    }
 });
 ```
 
@@ -159,7 +137,7 @@ private void onCustomActionStart(long actionId, String actionName, List<Action.C
 If you want, you may set callback for errors. Then every time an error occurs, you will be notified.
 
 ```java
-beaconSDK.setBeaconErrorListener(new BeaconErrorListener() {
+beaconControl.setBeaconErrorListener(new BeaconErrorListener() {
 	@Override
 	public void onError(ErrorCode errorCode) {
 		Log.e(TAG, "Some error occured in Beacon SDK: " + errorCode.name());
@@ -170,17 +148,30 @@ beaconSDK.setBeaconErrorListener(new BeaconErrorListener() {
 BeaconSDK configuring is done now. When needed, you may start beacon monitoring and ranging.
 
 ```java
-beaconSDK.startScan();
+beaconControl.startScan();
+```
+
+When the scanning is started you can request at any given time a reload of configuration - it will be fetched from the backend server.
+If the fetch was successful, you'll be notified in `onBeaconsConfigurationLoaded` of `BeaconDelegate` interface.
+```java
+beaconControl.reloadConfiguration();
 ```
 
 When you do not need monitoring and ranging, you may stop beacon detection.
 
 ```java
-beaconSDK.stopScan();
+beaconControl.stopScan();
+```
+
+## Advanced configuration
+
+If you want to communicate with your private instance of BeaconControl backend server, you need to overwrite the url by providing it in your application's `strings.xml` file:
+```xml
+<string name="sdk_config__service_base_url">http://your.server.com/api/v1/</string>
 ```
 
 ## License
 
 You can find license in LICENSE.txt file.
 
-If you have any troubles, please contact us at feedback@beaconctrl.com.
+If you have any troubles, please contact us at feedback@beaconcontrol.io.

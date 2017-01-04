@@ -1,0 +1,30 @@
+If you wish to be able to publish a new release of the library you have to first configure your environment and then publish a new release.
+
+Environment configuration:
+1. Create an account at https://issues.sonatype.org/secure/Signup!default.jspa
+2. Add a comment in issue https://issues.sonatype.org/browse/OSSRH-27343: "Please add user [your_login] to be associated with this groupId." and await permission grant.
+3. Create PGP signatures described here: http://central.sonatype.org/pages/working-with-pgp-signatures.html
+4. Add following properties to your local gradle.properties file (located most probably at ~/.gradle/gradle.properties):
+SONATYPE_NEXUS_USERNAME=your_sonatype_username_from_point_1
+SONATYPE_NEXUS_PASSWORD=your_sonatype_password_from_point_1
+
+signing.keyId=your_key_id_from_point_3
+signing.password=your_gpg_passphrase_from_point_3
+signing.secretKeyRingFile=/Users/[your_username]/.gnupg/secring.gpg
+
+
+Publishing a new release:
+1. Remember to update VERSION_NAME in top-level gradle.properties
+2. Invoke :
+./gradlew uploadArchives
+
+3. Go to Sonatype's Staging Repositories: https://oss.sonatype.org/#stagingRepositories (login if required)
+4. Scroll to the bottom of the list (central-bundles-XXXX are other user's artifacts that we have no interest in), look for `ioupnextbeaconcontrol-XXXX` and click on it.
+5. Click 'Close' button at the top of the list.
+6. Wait a moment anc click 'Refresh' until 'Release' button becomes active or an error is displayed at the bottom (look for 'Activity')
+7. The last step is clicking the 'Release' button - after that the library should be synced with Maven Central in the next few hours.
+8. To check for successful publish go to: https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22io.upnext.beaconcontrol%22 and look for your specific version.
+
+
+For more information look at the tutorial available at https://android.jlelse.eu/the-complete-guide-to-creating-an-android-library-46628b7fc879#.e2p9wuyxp
+Official Sonatype docs: http://central.sonatype.org/pages/producers.html
