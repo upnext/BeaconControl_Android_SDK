@@ -21,7 +21,7 @@ If you are using Gradle, include in your dependencies:
 ```groovy
 dependencies {
 	...
-    compile 'io.upnext.beaconcontrol:beaconcontrol:1.0.0'
+    compile 'io.upnext.beaconcontrol:beaconcontrol:1.0.2'
     ...
 }
 ```

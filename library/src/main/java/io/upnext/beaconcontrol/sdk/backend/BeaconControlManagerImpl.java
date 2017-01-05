@@ -173,4 +173,9 @@ public class BeaconControlManagerImpl implements BeaconControlManager {
     public Call<GetPresenceResponse> getPresenceCall(GetPresenceRequest request) {
         return beaconControlService.getPresence(request.getRanges(), request.getZones());
     }
+
+    @Override
+    public void clearToken() {
+        tokenStorage.clear();
+    }
 }

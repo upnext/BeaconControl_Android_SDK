@@ -22,4 +22,6 @@ public interface BeaconControlManager {
     Call<Void> createEventsCall(CreateEventsRequest request);
 
     Call<GetPresenceResponse> getPresenceCall(GetPresenceRequest request);
+
+    void clearToken();
 }
