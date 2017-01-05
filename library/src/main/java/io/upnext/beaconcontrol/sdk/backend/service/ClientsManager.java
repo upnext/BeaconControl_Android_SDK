@@ -90,18 +90,26 @@ public class ClientsManager {
         }
     }
 
-    protected void notifyClientsAboutAction(String beaconUniqueId, BeaconEvent beaconEvent, long eventTimestamp, double distance) {
+    protected void notifyClientsAboutAction(String beaconUniqueId, BeaconEvent beaconEvent, long eventTimestamp) {
         BeaconModel bm = getMonitoredBeaconModel(beaconUniqueId);
         if (bm == null) return;
 
         EventInfo eventInfo = new EventInfo(beaconEvent, eventTimestamp, EventSource.BEACON);
-        notifyClientsAboutBeaconProximityChange(bm, eventInfo, distance);
         notifyClientsAboutAction(bm, bm.getBeaconTriggersForEvent(beaconEvent), eventInfo);
 
         if (bm.getZone() != null) {
             eventInfo = new EventInfo(beaconEvent, eventTimestamp, EventSource.ZONE);
             notifyClientsAboutAction(bm, bm.getZoneTriggersForEvent(beaconEvent), eventInfo);
         }
+    }
+
+    protected void notifyClientsAboutBeaconProximityChange(String beaconUniqueId, BeaconEvent beaconEvent, long eventTimestamp, double distance) {
+        BeaconModel bm = getMonitoredBeaconModel(beaconUniqueId);
+        if (bm == null) return;
+
+        EventInfo eventInfo = new EventInfo(beaconEvent, eventTimestamp, EventSource.BEACON);
+
+        notifyClientsAboutBeaconProximityChange(bm, eventInfo, distance);
     }
 
     protected BeaconEvent getBeaconEventFromDistance(double distance) {

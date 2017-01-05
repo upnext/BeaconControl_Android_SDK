@@ -234,7 +234,7 @@ public class BeaconService extends Service implements BeaconConsumer {
     private void processEvent(BeaconEvent beaconEvent, long eventTimestamp, Region region, double distance) {
         String beaconUniqueId = region.getUniqueId();
 
-        clientsManager.notifyClientsAboutAction(beaconUniqueId, beaconEvent, eventTimestamp, distance);
+        clientsManager.notifyClientsAboutBeaconProximityChange(beaconUniqueId, beaconEvent, eventTimestamp, distance);
 
         BeaconEvent oldBeaconEvent = clientsManager.getBeaconEvent(beaconUniqueId);
         if (beaconEvent == oldBeaconEvent) {
@@ -242,6 +242,7 @@ public class BeaconService extends Service implements BeaconConsumer {
             return;
         }
 
+        clientsManager.notifyClientsAboutAction(beaconUniqueId, beaconEvent, eventTimestamp);
         clientsManager.updateBeaconEvent(beaconUniqueId, beaconEvent);
     }
 
