@@ -147,6 +147,9 @@ public class BeaconServiceHelper {
             notifyService(getBeaconServiceIntent(), BeaconService.Command.STOP_SCAN);
             bound = false;
         }
+
+        configurations = null;
+        beaconControlManager.clearToken();
     }
 
     private void notifyService(Intent i, BeaconService.Command cmd) {
