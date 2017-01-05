@@ -12,7 +12,7 @@ The library allows the application to start and stop beacon detection. If beacon
 
 ## Documentation
 
-On the [project website](https://www.beaconctrl.com/dev/androidsdk-docs/) you will find JavaDoc [documentation](https://www.beaconctrl.com/dev/androidsdk-docs/references).
+On the [project website](https://beaconcontrol.io/dev/android-sdk-docs) you will find JavaDoc [documentation](https://beaconcontrol.io/dev/android-sdk-docs/references).
 
 ## Adding library dependency
 
